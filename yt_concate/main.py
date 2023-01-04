@@ -1,5 +1,9 @@
 from yt_concate.pipeline.steps.get_video_list import GetVideoList
 from yt_concate.pipeline.pipeline import Pipeline
+from yt_concate.pipeline.steps.download_captions import DownloadCaptions
+from yt_concate.utils import Utils
+from yt_concate.pipeline.steps.preflight import Preflight
+from yt_concate.pipeline.steps.postflight import Postflight
 
 CHANNEL_ID = 'UCKSVUHI9rbbkXhvAXK-2uxA'
 
@@ -10,11 +14,16 @@ def main():
     }
 
     steps = [
+        Preflight(),
         GetVideoList(),
+        DownloadCaptions(),
+        Postflight(),
     ]
 
+    utils = Utils()
     p = Pipeline(steps)
-    p.run(inputs)
+    p.run(inputs, utils)
+
 
 
 # 檢查執行這個檔案時是不是程式的進入點
